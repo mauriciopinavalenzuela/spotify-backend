@@ -9,6 +9,20 @@ export class ArtistasController {
     @Get()
     obtenerTodosLosArtistas(@Res() response: Response) {
         const artistas = this.artistasService.obtenerTodosLosArtistas();
-        response.status(200).send(artistas);  
+        response.status(200).send(artistas);
+    }
+
+    @Post()
+    crearArtista(
+        @Body() artista: Artista, 
+        @Res() response: Response
+    ) {
+        const nuevoArtista = this.artistasService.crearArtista(artista);
+
+        if (nuevoArtista) {
+            response.status(201).send(nuevoArtista);
+        } else {
+            response.status(400).send({ error: 'El artista ya existe' });
+        }
     }
 }
